@@ -164,7 +164,7 @@ pub struct ApReq<'a> {
 }
 
 /// Kerberos AP Reply
-#[derive(Debug, PartialEq)]
+#[derive(Debug, PartialEq, Clone)]
 pub struct ApRep<'a> {
     pub pvno: u32,
     pub msg_type: MessageType,

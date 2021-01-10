@@ -207,7 +207,7 @@ pub fn parse_encrypted<'a>(i: &'a [u8]) -> IResult<&'a [u8], EncryptedData<'a>, 
         let enc = EncryptedData {
             etype,
             kvno,
-            cipher,
+            cipher: std::borrow::Cow::Borrowed(cipher),
         };
         Ok((i, enc))
     })(i)

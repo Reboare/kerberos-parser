@@ -58,7 +58,7 @@ pub struct Ticket<'a> {
     /// Encrypted encoding of the EncTicketPart sequence
     pub enc_part: EncryptedData<'a>,
 }
-
+use std::borrow::Cow;
 /// Kerberos EncryptedData
 #[derive(Clone, Debug, PartialEq)]
 pub struct EncryptedData<'a> {
@@ -67,7 +67,7 @@ pub struct EncryptedData<'a> {
     /// Version number of the key under which data is encrypted
     pub kvno: Option<u32>,
     /// Ciphertext
-    pub cipher: &'a [u8],
+    pub cipher: Cow<'a, [u8]>,
 }
 
 /// Key Distribution Center (KDC) Request Message

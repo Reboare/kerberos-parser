@@ -532,7 +532,7 @@ fn parse_krb5_padata_sequence(i: &[u8]) -> IResult<&[u8], Vec<PAData>, BerError>
 ///         -- use-session-key(1),
 ///         -- mutual-required(2)
 /// </pre>
-pub fn parse_ap_req(i: &[u8]) -> IResult<&[u8], ApReq, BerError> {
+pub fn parse_ap_req(i: &[u8]) -> IResult<&[u8], Cow<ApReq>, BerError> {
     parse_ber_tagged_explicit_g(BerTag(14), |i, hdr| {
         if !hdr.is_application() {
             return Err(Err::Error(BerError::InvalidTag));
@@ -552,7 +552,7 @@ pub fn parse_ap_req(i: &[u8]) -> IResult<&[u8], ApReq, BerError> {
                 ticket,
                 authenticator: Cow::Owned(authenticator),
             };
-            Ok((i, req))
+            Ok((i, Cow::Owned(req)))
         })(i)
     })(i)
 }

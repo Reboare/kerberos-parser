@@ -8,7 +8,7 @@ use nom::error::{make_error, ErrorKind};
 use nom::multi::many1;
 use nom::{Err, IResult};
 use std::str;
-
+use std::borrow::Cow;
 use crate::krb5::*;
 
 /// Parse a signed 32 bits integer
@@ -179,7 +179,7 @@ pub fn parse_krb5_ticket<'a>(i: &'a [u8]) -> IResult<&'a [u8], Ticket<'a>, BerEr
                 tkt_vno,
                 realm,
                 sname,
-                enc_part,
+                enc_part: Cow::Owned(enc_part),
             };
             Ok((i, tkt))
         })(i)
@@ -550,7 +550,7 @@ pub fn parse_ap_req(i: &[u8]) -> IResult<&[u8], ApReq, BerError> {
                 msg_type,
                 ap_options,
                 ticket,
-                authenticator,
+                authenticator: Cow::Owned(authenticator),
             };
             Ok((i, req))
         })(i)
@@ -579,7 +579,7 @@ pub fn parse_ap_rep(i: &[u8]) -> IResult<&[u8], ApRep, BerError> {
             let rep = ApRep {
                 pvno,
                 msg_type,
-                enc_part,
+                enc_part: Cow::Owned(enc_part),
             };
             Ok((i, rep))
         })(i)

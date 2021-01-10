@@ -56,7 +56,7 @@ pub struct Ticket<'a> {
     /// Components of the name part of the server's identity
     pub sname: PrincipalName,
     /// Encrypted encoding of the EncTicketPart sequence
-    pub enc_part: EncryptedData<'a>,
+    pub enc_part: Cow<'a, EncryptedData<'a>>,
 }
 use std::borrow::Cow;
 /// Kerberos EncryptedData
@@ -160,7 +160,7 @@ pub struct ApReq<'a> {
     pub msg_type: MessageType,
     pub ap_options: DerObject<'a>, // KerberosFlags
     pub ticket: Ticket<'a>,
-    pub authenticator: EncryptedData<'a>,
+    pub authenticator: Cow<'a, EncryptedData<'a>>,
 }
 
 /// Kerberos AP Reply
@@ -168,5 +168,5 @@ pub struct ApReq<'a> {
 pub struct ApRep<'a> {
     pub pvno: u32,
     pub msg_type: MessageType,
-    pub enc_part: EncryptedData<'a>,
+    pub enc_part: Cow<'a, EncryptedData<'a>>,
 }

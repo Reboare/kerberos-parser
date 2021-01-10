@@ -16,7 +16,7 @@ pub use crate::krb5_errors::*;
 /// Kerberos Realm
 ///
 /// A Kerberos realm is a set of managed nodes that share the same Kerberos database.
-#[derive(Debug, PartialEq)]
+#[derive(Debug, PartialEq, Clone)]
 pub struct Realm(pub String);
 
 /// Kerberos PrincipalName
@@ -28,7 +28,7 @@ pub struct Realm(pub String);
 /// <pre>
 /// principal-name.instance-name@realm-name
 /// </pre>
-#[derive(Debug, PartialEq)]
+#[derive(Debug, PartialEq, Clone)]
 pub struct PrincipalName {
     pub name_type: NameType,
     pub name_string: Vec<String>,
@@ -47,7 +47,7 @@ impl fmt::Display for PrincipalName {
 /// other information, all sealed using the server's secret key.  It
 /// only serves to authenticate a client when presented along with a
 /// fresh Authenticator.
-#[derive(Debug, PartialEq)]
+#[derive(Debug, PartialEq, Clone)]
 pub struct Ticket<'a> {
     /// Version number for the ticket format (5)
     pub tkt_vno: u32,
@@ -60,7 +60,7 @@ pub struct Ticket<'a> {
 }
 
 /// Kerberos EncryptedData
-#[derive(Debug, PartialEq)]
+#[derive(Clone, Debug, PartialEq)]
 pub struct EncryptedData<'a> {
     /// EncryptionType
     pub etype: EncryptionType,
@@ -154,7 +154,7 @@ pub struct PAData<'a> {
 }
 
 /// Kerberos AP Request
-#[derive(Debug, PartialEq)]
+#[derive(Debug, PartialEq, Clone)]
 pub struct ApReq<'a> {
     pub pvno: u32,
     pub msg_type: MessageType,
